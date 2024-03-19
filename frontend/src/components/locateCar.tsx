@@ -13,10 +13,12 @@ const Client = () => {
     socket.on('from-server', (msg) => {
       setServerMessage(msg);
 
-      // 解析接收到的 GPS 数据，并添加到 receivedData
+      // 解析接收到的 GPS 数据
       const [latitude, longitude] = msg.split(',').map(parseFloat);
+
       if (!isNaN(latitude) && !isNaN(longitude)) {
-        setReceivedData(prevData => [...prevData, { latitude, longitude }]);
+        // 替换 receivedData 中的数据
+        setReceivedData([{ latitude, longitude }]);
       }
     });
 
@@ -26,16 +28,14 @@ const Client = () => {
   }, []);
 
   return (
-    <MapContainer center={[23.174023, 113.408984]} zoom={20} style={{ height: '100vh', width: '200vh' }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+    <MapContainer center={[39.916611, 116.390748]} zoom={20} style={{ height: '100vh', width: '200vh' }}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       {receivedData.map((data, index) => (
         <Marker key={index} position={[data.latitude, data.longitude]}>
-          <Popup>
+          {/* <Popup>
             Latitude: {data.latitude}<br />
             Longitude: {data.longitude}
-          </Popup>
+          </Popup> */}
         </Marker>
       ))}
     </MapContainer>

@@ -1,28 +1,12 @@
-import { useState } from 'react';
-import { io } from 'socket.io-client';
-
-const socket = io('ws://localhost:5000');
-
+import Client from './Client';
+import MapView from './MapView';
+import Map from './components/locateCar';
 const App = () => {
-  const [serverMessage, setServerMessage] = useState(null);
-
-  socket.on('from-server', (msg) => {
-    setServerMessage(msg);
-  });
-
-  const sendToServer = () => {
-    socket.emit('to-server', 'hello');
-  }
-
+  
   
   return (
-    <div className="App">
-      <p>
-        Server: <span>{serverMessage}</span>
-      </p>
-      <button onClick={sendToServer}>Send</button>
-    </div>
-  );
+    <Map />
+  )
 }
 
 export default App;
